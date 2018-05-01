@@ -1,0 +1,139 @@
+{
+  "name": "sm-suggest",
+  "version": "0.1.0",
+  "description": "Suggestion Application for Smartprix",
+  "main": "dist/index.js",
+  "repository": {
+    "private": true
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "nodemon src/index.js --ignore dist/ res/ static/ --exec babel-node",
+    "dev": "node build.js",
+    "test": "npm run lint && npm run test-only",
+    "check-coverage": "true",
+    "build": "rm -rfd dist && babel src --out-dir dist --copy-files --source-maps",
+    "lint": "eslint src res --ext .js --ext .vue --ext .html",
+    "lint:fix": "eslint src res --ext .js --ext .vue --ext .html --fix",
+    "test-only": "NODE_ENV=test mocha --exit --require @babel/register $(find test -iname *.test.js)",
+    "migrate": "knex migrate:latest",
+    "migrate:create": "knex migrate:make",
+    "server": "npm start",
+    "basic": "node build.js run-basic",
+    "admin": "node build.js run-admin",
+    "precommit": "npm run build && npm test && npm run check-coverage",
+    "seed": "knex seed:run",
+    "refresh": "node build.js refresh-db"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bluebird": "^3.5.1",
+    "el-admin": "^0.3.6",
+    "element-ui": "^2.3.3",
+    "gqutils": "^1.1.0",
+    "graphql": "0.13.2",
+    "graphql-server-koa": "^1.3.4",
+    "graphql-subscriptions": "^0.5.8",
+    "graphql-tools": "2.24.0",
+    "knex": "^0.14.5",
+    "koa": "2.5.0",
+    "koa-body": "2",
+    "koa-router": "7.4.0",
+    "koa-send": "^4.1.3",
+    "koa-static-cache": "5.1.2",
+    "koa-views": "6.1.4",
+    "lodash": "4.17.5",
+    "moment": "^2.22.0",
+    "mysql2": "^1.5.3",
+    "objection": "^1.1.3",
+    "sm-utils": "^2.13.10",
+    "vue": "2.5.16",
+    "vue-router": "^3.0.1",
+    "vuex": "3.0.1",
+    "vutils": "^0.14.7",
+    "xorm": "^0.6.36",
+    "pg": "^7.4.1",
+    "ua-parser-js": "^0.7.17",
+    "urijs": "^1.19.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.40",
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/node": "^7.0.0-beta.40",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.40",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0-beta.40",
+    "@babel/plugin-proposal-optional-catch-binding": "^7.0.0-beta.40",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0-beta.40",
+    "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "@babel/register": "^7.0.0-beta.40",
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "eslint-config-smartprix": "^3.4.2",
+    "husky": "^0.14.3",
+    "mocha": "^5.0.5",
+    "sm-webpack-config": "^0.18.2"
+  },
+  "eslintConfig": {
+    "extends": "smartprix",
+    "globals": {
+      "d": false,
+      "_": false,
+      "moment": false
+    },
+    "rules": {
+      "no-await-in-loop": 0,
+      "no-console": 0,
+      "vue/html-indent": 0,
+      "vue/script-indent": 0,
+      "vue/order-in-components": 0,
+      "vue/html-closing-bracket-spacing": 0,
+      "vue/no-side-effects-in-computed-properties": 0
+    }
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          },
+          "modules": "commonjs",
+          "shippedProposals": true
+        }
+      ]
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": true
+        }
+      ],
+      [
+        "@babel/plugin-proposal-optional-chaining",
+        {
+          "loose": true
+        }
+      ],
+      [
+        "@babel/plugin-proposal-nullish-coalescing-operator",
+        {
+          "loose": true
+        }
+      ],
+      "@babel/plugin-proposal-optional-catch-binding"
+    ],
+    "sourceMaps": true
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run check-coverage"
+    }
+  }
+}
